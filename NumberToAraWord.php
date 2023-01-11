@@ -94,9 +94,9 @@ function NumberToWord($num , $moneyType = null , $SubMoneyType = Null) {
                                 $Unites[1] = "أحدى";
                             } if(substr($i,2,1) > 0 && substr($i,2,1) == 2) {
                                 $Unites[2] = "إثنى";
-                            } elseif(!substr($i,2,1) && substr($i,0,1) == 1) {
+                            } elseif(!substr($i,2,1) && substr($i,1,1) == 1) {
                                 $Unites[1] = "أحد";
-                            } elseif(!substr($i,2,1) && substr($i,0,1) == 2) {
+                            } elseif(!substr($i,2,1) && substr($i,1,1) == 2) {
                                 $Unites[2] = "إثنا";
                             }
                             if($i > 19) {
@@ -152,9 +152,9 @@ function NumberToWord($num , $moneyType = null , $SubMoneyType = Null) {
                                 $Unites[1] = "أحدى";
                             } if(substr($i,2,1) > 0 && substr($i,2,1) == 2) {
                                 $Unites[2] = "إثنى";
-                            } elseif(!substr($i,2,1) && substr($i,0,1) == 1) {
+                            } elseif(!substr($i,2,1) && substr($i,1,1) == 1) {
                                 $Unites[1] = "أحد";
-                            } elseif(!substr($i,2,1) && substr($i,0,1) == 2) {
+                            } elseif(!substr($i,2,1) && substr($i,1,1) == 2) {
                                 $Unites[2] = "إثنا";
                             }
                             if($i > 19) {
@@ -210,9 +210,9 @@ function NumberToWord($num , $moneyType = null , $SubMoneyType = Null) {
                                 $Unites[1] = "أحدى";
                             } if(substr($i,2,1) > 0 && substr($i,2,1) == 2) {
                                 $Unites[2] = "إثنى";
-                            } elseif(!substr($i,2,1) && substr($i,0,1) == 1) {
+                            } elseif(!substr($i,2,1) && substr($i,1,1) == 1) {
                                 $Unites[1] = "أحد";
-                            } elseif(!substr($i,2,1) && substr($i,0,1) == 2) {
+                            } elseif(!substr($i,2,1) && substr($i,1,1) == 2) {
                                 $Unites[2] = "إثنا";
                             }
                             if($i > 19) {
@@ -268,9 +268,9 @@ function NumberToWord($num , $moneyType = null , $SubMoneyType = Null) {
                                 $Unites[1] = "أحدى";
                             } if(substr($i,2,1) > 0 && substr($i,2,1) == 2) {
                                 $Unites[2] = "إثنى";
-                            } elseif(!substr($i,2,1) && substr($i,0,1) == 1) {
+                            } elseif(!substr($i,2,1) && substr($i,1,1) == 1) {
                                 $Unites[1] = "أحد";
-                            } elseif(!substr($i,2,1) && substr($i,0,1) == 2) {
+                            } elseif(!substr($i,2,1) && substr($i,1,1) == 2) {
                                 $Unites[2] = "إثنا";
                             }
                             if($i > 19) {
@@ -435,6 +435,6 @@ function NumberToWord($num , $moneyType = null , $SubMoneyType = Null) {
         }
         return $GetNumberWord;
 }
-$number = 2685.19; 
+$number = 12685.19; 
 echo $number."<br>";    // This Is Print Number Before Convert Arabic Text
-echo NumberToWord($number); // This Is Print Number After Convert Arabic Text
+echo NumberToWord($number)."<br>"; // This Is Print Number After Convert Arabic Text
