@@ -419,22 +419,25 @@ function NumberToWord($num , $moneyType = null , $SubMoneyType = Null) {
         }
     /* Start Convert Decimal To Text */
     /* Return Converted Number  */
-        $imp = implode(" و",array_filter(array_reverse($arr)));
+        foreach(array_filter(array_reverse($arr)) as $v) {
+            $trim[] = trim($v);
+        }
+        $imp = implode(" و",$trim);
         if($moneyType != Null) {
             if($retext1 != "" && $SubMoneyType != null) {
-                $GetNumberWord = $imp." ".$moneyType." و ".$retext1." ".$SubMoneyType;
+                $GetNumberWord = $imp." ".$moneyType."و ".$retext1." ".$SubMoneyType;
             } elseif($retext1 != "" && $SubMoneyType == null) {
-                $GetNumberWord = $imp." ".$moneyType." و ".$retext1;
+                $GetNumberWord = $imp." ".$moneyType."و ".$retext1;
             }
         } else {
             if($retext1 != "" && $SubMoneyType != null) {
-                $GetNumberWord = $imp." و ".$retext1." ".$SubMoneyType;
+                $GetNumberWord = $imp."و ".$retext1." ".$SubMoneyType;
             } else {
                 $GetNumberWord = $imp;
             }
         }
         return $GetNumberWord;
 }
-$number = 12685.19; 
+$number = 1268525.19; 
 echo $number."<br>";    // This Is Print Number Before Convert Arabic Text
 echo NumberToWord($number)."<br>"; // This Is Print Number After Convert Arabic Text
