@@ -489,6 +489,6 @@ function NumberToWord($num , $moneyType = null , $SubMoneyType = Null) {
         }
         return $GetNumberWord;
 }
-$number = 11030.000; 
+$number = 12685251.19; 
 echo $number."<br>";     // This Is Print Number Before Convert Arabic Text
 echo NumberToWord($number)."<br>";  // This Is Print Number After Convert Arabic Text
