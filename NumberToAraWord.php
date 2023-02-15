@@ -326,31 +326,53 @@ function NumberToWord($num , $moneyType = null , $SubMoneyType = Null) {
                         $retext.= $tens[0];
                     } elseif($i > 10 && $i < 100) {
                     /* Start Check if Number More Than Handreds Or Not */
-                        if(substr($i,2,1) > 0 && substr($i,2,1) == 1) {
+                        if(substr($i,0,1) > 0 && substr($i,2,1) > 0 && substr($i,2,1) == 1 && substr($i,1,1) == 1) {
                             $Unites[1] = "أحدى";
                             $retext.= $Unites[substr($i,2,1)];
-                        } if(substr($i,2,1) > 0 && substr($i,2,1) == 2) {
+                        } elseif(substr($i,0,1) > 0 && substr($i,2,1) > 0 && substr($i,2,1) == 2 && substr($i,1,1) == 1) {
                             $Unites[2] = "إثنى";
+                            $retext.= $Unites[substr($i,2,1)];
+                        } elseif(substr($i,0,1) == 0 && substr($i,2,1) > 0 && substr($i,2,1) == 1 && substr($i,1,1) == 1) {
+                                $Unites[1] = "أحد";
+                                $retext.= $Unites[substr($i,2,1)];
+                        } elseif(substr($i,0,1) == 0 && substr($i,2,1) > 0 && substr($i,2,1) == 2 && substr($i,1,1) == 1) {
+                            $Unites[2] = "إثنا";
                             $retext.= $Unites[substr($i,2,1)];
                         } elseif(substr($i,2,1) > 0 && substr($i,2,1) > 2) {
                             $retext.= $Unites[substr($i,2,1)];
-                        } elseif(!substr($i,2,1) && substr($i,1,1) == 1) {
+                        } elseif(!substr($i,2,1) && substr($i,1,1) == 1 && substr($i,0,1) == 1) {
                             $Unites[1] = "أحد";
                             $retext.= $Unites[substr($i,1,1)];
-                        } elseif(!substr($i,2,1) && substr($i,1,1) == 2) {
+                        } elseif(!substr($i,2,1) && substr($i,1,1) == 2 && substr($i,0,1) == 1) {
                             $Unites[2] = "إثنا";
                             $retext.= $Unites[substr($i,1,1)];
-                        } elseif(!substr($i,2,1) && substr($i,1,1) > 2) {
+                        } elseif(!substr($i,2,1) && substr($i,1,1) > 2 && substr($i,0,1) > 0) {
                             $retext.= $Unites[substr($i,1,1)];
+                        } elseif(!substr($i,2,1) && substr($i,1,1) != 0 && substr($i,0,1) > 0) {
+                            $retext.= $Unites[substr($i,1,1)];
+                        }elseif(!substr($i,2,1) && substr($i,1,1) == 2 && substr($i,0,1) > 0) {
+                            $Unites[2] = "إثنا";
+                            $retext.= $Unites[substr($i,1,1)];
+                        }elseif(!substr($i,2,1) && substr($i,1,1) == 1 && substr($i,0,1) > 0) {
+                            $Unites[1] = "أحد";
+                            $retext.= $Unites[substr($i,1,1)];
+                        } elseif(!substr($i,2,1) && substr($i,1,1) > 0 && substr($i,0,1) > 1) {
+                            $retext.= $Unites[substr($i,1,1)];
+                        } elseif(substr($i,2,1) > 0 && substr($i,1,1) > 1 && substr($i,0,1) == 0) {
+                            $retext.= $Unites[substr($i,2,1)];
                         }
                     /* End Check if Number More Than Handreds Or Not */
                         if($i > 19) {
                         /* Start Check if Number More Than Handreds Or Not */
-                            if(substr($i,2,1) && substr($i,2,1) != 0) {
+                            if(substr($i,0,1) == 0 && substr($i,1,1) > 1 && substr($i,2,1) == 0) {
+                                $retext.= " ".$tens[substr($i,1,1)];
+                            } elseif(!substr($i,2,1) && substr($i,1,1) == 0 && substr($i,0,1) > 1) {
+                                $retext.= " ".$tens[substr($i,0,1)];
+                            } elseif(substr($i,0,1) == 0 && substr($i,1,1) > 1 && substr($i,2,1) > 0) {
                                 $retext.= " و".$tens[substr($i,1,1)];
-                            } else {
+                            } elseif(!substr($i,2,1) && substr($i,1,1) > 0 && substr($i,0,1) > 1) {
                                 $retext.= " و".$tens[substr($i,0,1)];
-                            }
+                            } 
                         /* End Check if Number More Than Handreds Or Not */
                         } else {
                         /* Start Check if Number More Than Handreds Or Not */
@@ -375,13 +397,15 @@ function NumberToWord($num , $moneyType = null , $SubMoneyType = Null) {
                             $retext.= " وأثنا ";
                             $retext.= $tens[substr($i,1,1)];
                         } elseif(substr($i,2,1) > 2 && substr($i,1,1) < 2  && substr($i,1,1) > 0) {
-                            $retext.= "و ".$Unites[substr($i,2,1)];
+                            $retext.= " و".$Unites[substr($i,2,1)];
                             $retext.= " ".$tens[substr($i,1,1)];
                         } else {
                             if(substr($i,2,1) != 0) {
                                 $retext.= " و".$Unites[substr($i,2,1)];
                             }
-                            $retext.= " و".$tens[substr($i,1,1)];
+                            if(substr($i,1,1) > 0) {
+                                $retext.= " و".$tens[substr($i,1,1)];
+                            }
                         }
                     /* End Handreds Numbers */
                     }
@@ -465,6 +489,6 @@ function NumberToWord($num , $moneyType = null , $SubMoneyType = Null) {
         }
         return $GetNumberWord;
 }
-$number = 110069.000; 
-echo $number."<br>";    // This Is Print Number Before Convert Arabic Text
-echo NumberToWord($number)."<br>"; // This Is Print Number After Convert Arabic Text
+$number = 11030.000; 
+echo $number."<br>";     // This Is Print Number Before Convert Arabic Text
+echo NumberToWord($number)."<br>";  // This Is Print Number After Convert Arabic Text
