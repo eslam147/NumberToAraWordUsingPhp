@@ -91,23 +91,61 @@ function NumberToWord($num , $moneyType = null , $SubMoneyType = Null) {
                         } elseif($i > 2 && $i == 10) {
                             $arr[] = $tens[substr($i,-1,1)]." ".$trillions[3];
                         } elseif($i > 10 && $i < 100) {
-                            if(substr($i,2,1) > 0 && substr($i,2,1) == 1) {
+                            if(substr($i,0,1) > 0 && substr($i,2,1) > 0 && substr($i,2,1) == 1 && substr($i,1,1) == 1) {
                                 $Unites[1] = "أحدى";
-                            } if(substr($i,2,1) > 0 && substr($i,2,1) == 2) {
+                                $munite = $Unites[substr($i,2,1)];
+                            } elseif(substr($i,0,1) > 0 && substr($i,2,1) > 0 && substr($i,2,1) == 2 && substr($i,1,1) == 1) {
                                 $Unites[2] = "إثنى";
-                            } elseif(!substr($i,2,1) && substr($i,1,1) == 1) {
+                                $munite = $Unites[substr($i,2,1)];
+                            } elseif(substr($i,0,1) == 0 && substr($i,2,1) > 0 && substr($i,2,1) == 1 && substr($i,1,1) == 1) {
                                 $Unites[1] = "أحد";
-                            } elseif(!substr($i,2,1) && substr($i,1,1) == 2) {
+                                $munite= $Unites[substr($i,2,1)];
+                            } elseif(substr($i,0,1) == 0 && substr($i,2,1) > 0 && substr($i,2,1) == 2 && substr($i,1,1) == 1) {
                                 $Unites[2] = "إثنا";
+                                $munite = $Unites[substr($i,2,1)];
+                            } elseif(substr($i,2,1) > 0 && substr($i,2,1) > 2) {
+                                $retext.= $Unites[substr($i,2,1)];
+                            } elseif(!substr($i,2,1) && substr($i,1,1) == 1 && substr($i,0,1) == 1) {
+                                $Unites[1] = "أحد";
+                                $munite = $Unites[substr($i,1,1)];
+                            } elseif(!substr($i,2,1) && substr($i,1,1) == 2 && substr($i,0,1) == 1) {
+                                $Unites[2] = "إثنا";
+                                $munite = $Unites[substr($i,1,1)];
+                            } elseif(!substr($i,2,1) && substr($i,1,1) > 2 && substr($i,0,1) > 0) {
+                               $munite = $Unites[substr($i,1,1)];
+                            } elseif(!substr($i,2,1) && substr($i,1,1) != 0 && substr($i,0,1) > 0) {
+                                $munite = $Unites[substr($i,1,1)];
+                            }elseif(!substr($i,2,1) && substr($i,1,1) == 2 && substr($i,0,1) > 0) {
+                                $Unites[2] = "إثنا";
+                                $munite = $Unites[substr($i,1,1)];
+                            }elseif(!substr($i,2,1) && substr($i,1,1) == 1 && substr($i,0,1) > 0) {
+                                $Unites[1] = "أحد";
+                                $munite = $Unites[substr($i,1,1)];
+                            } elseif(!substr($i,2,1) && substr($i,1,1) > 0 && substr($i,0,1) > 1) {
+                                $munite = $Unites[substr($i,1,1)];
+                            } elseif(substr($i,2,1) > 0 && substr($i,1,1) > 1 && substr($i,0,1) == 0) {
+                                $munite = $Unites[substr($i,2,1)];
                             }
                             if($i > 19) {
-                                if(trim($Unites[substr($i,1,1)]) != "صفر") {
-                                    $arr[] = $Unites[substr($i,-1,1)]." و ".$tens[substr($i,1,1)]." ".$trillions[4];
-                                } else {
-                                    $arr[] = $tens[substr($i,0,1)]." ".$trillions[4];
-                                }
+                                /* Start Check if Number More Than Handreds Or Not */
+                                    if(substr($i,0,1) == 0 && substr($i,1,1) > 1 && substr($i,2,1) == 0) {
+                                        $arr[] = $munite." ".$tens[substr($i,1,1)]." ".$trillions[4];
+                                    } elseif(!substr($i,2,1) && substr($i,1,1) == 0 && substr($i,0,1) > 1) {
+                                        $arr[] = $munite." ".$tens[substr($i,0,1)]." ".$trillions[4];
+                                    } elseif(substr($i,0,1) == 0 && substr($i,1,1) > 1 && substr($i,2,1) > 0) {
+                                        $arr[] = $munite." و".$tens[substr($i,1,1)]." ".$trillions[4];
+                                    } elseif(!substr($i,2,1) && substr($i,1,1) > 0 && substr($i,0,1) > 1) {
+                                        $arr[] = $munite." و".$tens[substr($i,0,1)]." ".$trillions[4];
+                                    } 
+                                /* End Check if Number More Than Handreds Or Not */
                             } else {
-                                $arr[] = $Unites[substr($i,1,1)]." ".$tens[substr($i,0,1)]." ".$trillions[4];
+                                /* Start Check if Number More Than Handreds Or Not */
+                                    if(substr($i,2,1) && substr($i,2,1) != 0) {
+                                        $arr[] = $munite." ".$tens[substr($i,1,1)]." ".$trillions[4];
+                                    } else {
+                                        $arr[] = $munite." ".$tens[substr($i,0,1)]." ".$trillions[4];
+                                    }
+                                /* End Check if Number More Than Handreds Or Not */
                             }
                         } elseif($i == 100) {
                             $arr[] = $handreds[substr($i,0,1)]." ".$trillions[1];
@@ -158,14 +196,61 @@ function NumberToWord($num , $moneyType = null , $SubMoneyType = Null) {
                             } elseif(!substr($i,2,1) && substr($i,1,1) == 2) {
                                 $Unites[2] = "إثنا";
                             }
+                            if(substr($i,0,1) > 0 && substr($i,2,1) > 0 && substr($i,2,1) == 1 && substr($i,1,1) == 1) {
+                                $Unites[1] = "أحدى";
+                                $munite = $Unites[substr($i,2,1)];
+                            } elseif(substr($i,0,1) > 0 && substr($i,2,1) > 0 && substr($i,2,1) == 2 && substr($i,1,1) == 1) {
+                                $Unites[2] = "إثنى";
+                                $munite = $Unites[substr($i,2,1)];
+                            } elseif(substr($i,0,1) == 0 && substr($i,2,1) > 0 && substr($i,2,1) == 1 && substr($i,1,1) == 1) {
+                                $Unites[1] = "أحد";
+                                $munite= $Unites[substr($i,2,1)];
+                            } elseif(substr($i,0,1) == 0 && substr($i,2,1) > 0 && substr($i,2,1) == 2 && substr($i,1,1) == 1) {
+                                $Unites[2] = "إثنا";
+                                $munite = $Unites[substr($i,2,1)];
+                            } elseif(substr($i,2,1) > 0 && substr($i,2,1) > 2) {
+                                $retext.= $Unites[substr($i,2,1)];
+                            } elseif(!substr($i,2,1) && substr($i,1,1) == 1 && substr($i,0,1) == 1) {
+                                $Unites[1] = "أحد";
+                                $munite = $Unites[substr($i,1,1)];
+                            } elseif(!substr($i,2,1) && substr($i,1,1) == 2 && substr($i,0,1) == 1) {
+                                $Unites[2] = "إثنا";
+                                $munite = $Unites[substr($i,1,1)];
+                            } elseif(!substr($i,2,1) && substr($i,1,1) > 2 && substr($i,0,1) > 0) {
+                               $munite = $Unites[substr($i,1,1)];
+                            } elseif(!substr($i,2,1) && substr($i,1,1) != 0 && substr($i,0,1) > 0) {
+                                $munite = $Unites[substr($i,1,1)];
+                            }elseif(!substr($i,2,1) && substr($i,1,1) == 2 && substr($i,0,1) > 0) {
+                                $Unites[2] = "إثنا";
+                                $munite = $Unites[substr($i,1,1)];
+                            }elseif(!substr($i,2,1) && substr($i,1,1) == 1 && substr($i,0,1) > 0) {
+                                $Unites[1] = "أحد";
+                                $munite = $Unites[substr($i,1,1)];
+                            } elseif(!substr($i,2,1) && substr($i,1,1) > 0 && substr($i,0,1) > 1) {
+                                $munite = $Unites[substr($i,1,1)];
+                            } elseif(substr($i,2,1) > 0 && substr($i,1,1) > 1 && substr($i,0,1) == 0) {
+                                $munite = $Unites[substr($i,2,1)];
+                            }
                             if($i > 19) {
-                                if(trim($Unites[substr($i,1,1)]) != "صفر") {
-                                    $arr[] = $Unites[substr($i,-1,1)]." و ".$tens[substr($i,1,1)]." ".$billions[4];
-                                } else {
-                                    $arr[] = $tens[substr($i,0,1)]." ".$billions[4];
-                                }
+                                /* Start Check if Number More Than Handreds Or Not */
+                                    if(substr($i,0,1) == 0 && substr($i,1,1) > 1 && substr($i,2,1) == 0) {
+                                        $arr[] = $munite." ".$tens[substr($i,1,1)]." ".$billions[4];
+                                    } elseif(!substr($i,2,1) && substr($i,1,1) == 0 && substr($i,0,1) > 1) {
+                                        $arr[] = $munite." ".$tens[substr($i,0,1)]." ".$billions[4];
+                                    } elseif(substr($i,0,1) == 0 && substr($i,1,1) > 1 && substr($i,2,1) > 0) {
+                                        $arr[] = $munite." و".$tens[substr($i,1,1)]." ".$billions[4];
+                                    } elseif(!substr($i,2,1) && substr($i,1,1) > 0 && substr($i,0,1) > 1) {
+                                        $arr[] = $munite." و".$tens[substr($i,0,1)]." ".$billions[4];
+                                    } 
+                                /* End Check if Number More Than Handreds Or Not */
                             } else {
-                                $arr[] = $Unites[substr($i,1,1)]." ".$tens[substr($i,0,1)]." ".$billions[4];
+                                /* Start Check if Number More Than Handreds Or Not */
+                                    if(substr($i,2,1) && substr($i,2,1) != 0) {
+                                        $arr[] = $munite." ".$tens[substr($i,1,1)]." ".$billions[4];
+                                    } else {
+                                        $arr[] = $munite." ".$tens[substr($i,0,1)]." ".$billions[4];
+                                    }
+                                /* End Check if Number More Than Handreds Or Not */
                             }
                         } elseif($i == 100) {
                             $arr[] = $handreds[substr($i,0,1)]." ".$billions[1];
@@ -207,24 +292,63 @@ function NumberToWord($num , $moneyType = null , $SubMoneyType = Null) {
                         } elseif($i > 2 && $i == 10) {
                             $arr[] = $tens[substr($i,-1,1)]." ".$millions[3];
                         } elseif($i > 10 && $i < 100) {
-                            if(substr($i,2,1) > 0 && substr($i,2,1) == 1) {
+                            if(substr($i,0,1) > 0 && substr($i,2,1) > 0 && substr($i,2,1) == 1 && substr($i,1,1) == 1) {
                                 $Unites[1] = "أحدى";
-                            } if(substr($i,2,1) > 0 && substr($i,2,1) == 2) {
+                                $munite = $Unites[substr($i,2,1)];
+                            } elseif(substr($i,0,1) > 0 && substr($i,2,1) > 0 && substr($i,2,1) == 2 && substr($i,1,1) == 1) {
                                 $Unites[2] = "إثنى";
-                            } elseif(!substr($i,2,1) && substr($i,1,1) == 1) {
+                                $munite = $Unites[substr($i,2,1)];
+                            } elseif(substr($i,0,1) == 0 && substr($i,2,1) > 0 && substr($i,2,1) == 1 && substr($i,1,1) == 1) {
                                 $Unites[1] = "أحد";
-                            } elseif(!substr($i,2,1) && substr($i,1,1) == 2) {
+                                $munite= $Unites[substr($i,2,1)];
+                            } elseif(substr($i,0,1) == 0 && substr($i,2,1) > 0 && substr($i,2,1) == 2 && substr($i,1,1) == 1) {
                                 $Unites[2] = "إثنا";
+                                $munite = $Unites[substr($i,2,1)];
+                            } elseif(substr($i,2,1) > 0 && substr($i,2,1) > 2) {
+                                $retext.= $Unites[substr($i,2,1)];
+                            } elseif(!substr($i,2,1) && substr($i,1,1) == 1 && substr($i,0,1) == 1) {
+                                $Unites[1] = "أحد";
+                                $munite = $Unites[substr($i,1,1)];
+                            } elseif(!substr($i,2,1) && substr($i,1,1) == 2 && substr($i,0,1) == 1) {
+                                $Unites[2] = "إثنا";
+                                $munite = $Unites[substr($i,1,1)];
+                            } elseif(!substr($i,2,1) && substr($i,1,1) > 2 && substr($i,0,1) > 0) {
+                               $munite = $Unites[substr($i,1,1)];
+                            } elseif(!substr($i,2,1) && substr($i,1,1) != 0 && substr($i,0,1) > 0) {
+                                $munite = $Unites[substr($i,1,1)];
+                            }elseif(!substr($i,2,1) && substr($i,1,1) == 2 && substr($i,0,1) > 0) {
+                                $Unites[2] = "إثنا";
+                                $munite = $Unites[substr($i,1,1)];
+                            }elseif(!substr($i,2,1) && substr($i,1,1) == 1 && substr($i,0,1) > 0) {
+                                $Unites[1] = "أحد";
+                                $munite = $Unites[substr($i,1,1)];
+                            } elseif(!substr($i,2,1) && substr($i,1,1) > 0 && substr($i,0,1) > 1) {
+                                $munite = $Unites[substr($i,1,1)];
+                            } elseif(substr($i,2,1) > 0 && substr($i,1,1) > 1 && substr($i,0,1) == 0) {
+                                $munite = $Unites[substr($i,2,1)];
                             }
                             if($i > 19) {
-                                if(trim($Unites[substr($i,1,1)]) != "صفر") {
-                                    $arr[] = $Unites[substr($i,-1,1)]." و ".$tens[substr($i,1,1)]." ".$millions[4];
-                                } else {
-                                    $arr[] = $tens[substr($i,0,1)]." ".$millions[4];
-                                }
+                                /* Start Check if Number More Than Handreds Or Not */
+                                    if(substr($i,0,1) == 0 && substr($i,1,1) > 1 && substr($i,2,1) == 0) {
+                                        $arr[] = $munite." ".$tens[substr($i,1,1)]." ".$millions[4];
+                                    } elseif(!substr($i,2,1) && substr($i,1,1) == 0 && substr($i,0,1) > 1) {
+                                        $arr[] = $munite." ".$tens[substr($i,0,1)]." ".$millions[4];
+                                    } elseif(substr($i,0,1) == 0 && substr($i,1,1) > 1 && substr($i,2,1) > 0) {
+                                        $arr[] = $munite." و".$tens[substr($i,1,1)]." ".$millions[4];
+                                    } elseif(!substr($i,2,1) && substr($i,1,1) > 0 && substr($i,0,1) > 1) {
+                                        $arr[] = $munite." و".$tens[substr($i,0,1)]." ".$millions[4];
+                                    } 
+                                /* End Check if Number More Than Handreds Or Not */
                             } else {
-                                $arr[] = $Unites[substr($i,1,1)]." ".$tens[substr($i,0,1)]." ".$millions[4];
+                                /* Start Check if Number More Than Handreds Or Not */
+                                    if(substr($i,2,1) && substr($i,2,1) != 0) {
+                                        $arr[] = $munite." ".$tens[substr($i,1,1)]." ".$millions[4];
+                                    } else {
+                                        $arr[] = $munite." ".$tens[substr($i,0,1)]." ".$millions[4];
+                                    }
+                                /* End Check if Number More Than Handreds Or Not */
                             }
+
                         } elseif($i == 100) {
                             $arr[] = $handreds[substr($i,0,1)]." ".$millions[1];
                         } elseif($i > 100 && $i < 1000) {
@@ -265,23 +389,61 @@ function NumberToWord($num , $moneyType = null , $SubMoneyType = Null) {
                         } elseif($i > 2 && $i == 10) {
                             $arr[] = $tens[substr($i,-1,1)]." ".$thousands[3];
                         } elseif($i > 10 && $i < 100) {
-                            if(substr($i,2,1) > 0 && substr($i,2,1) == 1) {
+                            if(substr($i,0,1) > 0 && substr($i,2,1) > 0 && substr($i,2,1) == 1 && substr($i,1,1) == 1) {
                                 $Unites[1] = "أحدى";
-                            } if(substr($i,2,1) > 0 && substr($i,2,1) == 2) {
+                                $munite = $Unites[substr($i,2,1)];
+                            } elseif(substr($i,0,1) > 0 && substr($i,2,1) > 0 && substr($i,2,1) == 2 && substr($i,1,1) == 1) {
                                 $Unites[2] = "إثنى";
-                            } elseif(!substr($i,2,1) && substr($i,1,1) == 1) {
+                                $munite = $Unites[substr($i,2,1)];
+                            } elseif(substr($i,0,1) == 0 && substr($i,2,1) > 0 && substr($i,2,1) == 1 && substr($i,1,1) == 1) {
                                 $Unites[1] = "أحد";
-                            } elseif(!substr($i,2,1) && substr($i,1,1) == 2) {
+                                $munite= $Unites[substr($i,2,1)];
+                            } elseif(substr($i,0,1) == 0 && substr($i,2,1) > 0 && substr($i,2,1) == 2 && substr($i,1,1) == 1) {
                                 $Unites[2] = "إثنا";
+                                $munite = $Unites[substr($i,2,1)];
+                            } elseif(substr($i,2,1) > 0 && substr($i,2,1) > 2) {
+                                $retext.= $Unites[substr($i,2,1)];
+                            } elseif(!substr($i,2,1) && substr($i,1,1) == 1 && substr($i,0,1) == 1) {
+                                $Unites[1] = "أحد";
+                                $munite = $Unites[substr($i,1,1)];
+                            } elseif(!substr($i,2,1) && substr($i,1,1) == 2 && substr($i,0,1) == 1) {
+                                $Unites[2] = "إثنا";
+                                $munite = $Unites[substr($i,1,1)];
+                            } elseif(!substr($i,2,1) && substr($i,1,1) > 2 && substr($i,0,1) > 0) {
+                               $munite = $Unites[substr($i,1,1)];
+                            } elseif(!substr($i,2,1) && substr($i,1,1) != 0 && substr($i,0,1) > 0) {
+                                $munite = $Unites[substr($i,1,1)];
+                            }elseif(!substr($i,2,1) && substr($i,1,1) == 2 && substr($i,0,1) > 0) {
+                                $Unites[2] = "إثنا";
+                                $munite = $Unites[substr($i,1,1)];
+                            }elseif(!substr($i,2,1) && substr($i,1,1) == 1 && substr($i,0,1) > 0) {
+                                $Unites[1] = "أحد";
+                                $munite = $Unites[substr($i,1,1)];
+                            } elseif(!substr($i,2,1) && substr($i,1,1) > 0 && substr($i,0,1) > 1) {
+                                $munite = $Unites[substr($i,1,1)];
+                            } elseif(substr($i,2,1) > 0 && substr($i,1,1) > 1 && substr($i,0,1) == 0) {
+                                $munite = $Unites[substr($i,2,1)];
                             }
                             if($i > 19) {
-                                if(trim($Unites[substr($i,1,1)]) != "صفر") {
-                                    $arr[] = $Unites[substr($i,-1,1)]." و ".$tens[substr($i,1,1)]." ".$thousands[4];
-                                } else {
-                                    $arr[] = $tens[substr($i,0,1)]." ".$thousands[4];
-                                }
+                                /* Start Check if Number More Than Handreds Or Not */
+                                    if(substr($i,0,1) == 0 && substr($i,1,1) > 1 && substr($i,2,1) == 0) {
+                                        $arr[] = $munite." ".$tens[substr($i,1,1)]." ".$thousands[4];
+                                    } elseif(!substr($i,2,1) && substr($i,1,1) == 0 && substr($i,0,1) > 1) {
+                                        $arr[] = $munite." ".$tens[substr($i,0,1)]." ".$thousands[4];
+                                    } elseif(substr($i,0,1) == 0 && substr($i,1,1) > 1 && substr($i,2,1) > 0) {
+                                        $arr[] = $munite." و".$tens[substr($i,1,1)]." ".$thousands[4];
+                                    } elseif(!substr($i,2,1) && substr($i,1,1) > 0 && substr($i,0,1) > 1) {
+                                        $arr[] = $munite." و".$tens[substr($i,0,1)]." ".$thousands[4];
+                                    } 
+                                /* End Check if Number More Than Handreds Or Not */
                             } else {
-                                $arr[] = $Unites[substr($i,1,1)]." ".$tens[substr($i,0,1)]." ".$thousands[4];
+                                /* Start Check if Number More Than Handreds Or Not */
+                                    if(substr($i,2,1) && substr($i,2,1) != 0) {
+                                        $arr[] = $munite." ".$tens[substr($i,1,1)]." ".$thousands[4];
+                                    } else {
+                                        $arr[] = $munite." ".$tens[substr($i,0,1)]." ".$thousands[4];
+                                    }
+                                /* End Check if Number More Than Handreds Or Not */
                             }
                         } elseif($i == 100) {
                             $arr[] = $handreds[substr($i,0,1)]." ".$thousands[1];
